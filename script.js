@@ -682,22 +682,19 @@ function loadLessons() {
         var blueRange = 0;
         var yellowRange = 0;
 
-        rangeRaw = rangeRaw.replaceAll("\\n", "");
-        rangeRaw = rangeRaw.replaceAll("hod. ", "");
-        rangeRaw = rangeRaw.trim();
-        $.each(rangeRaw.split(","), function(i, rang) {
-            rang = rang.trim();
-
-            if(rang.split(" ")[1].trim() === "přednášky") {
-                greenRange = +rang.split(" ")[0].trim();
-            } else if(rang.split(" ")[1].trim() === "cvičení") {
-                blueRange = +rang.split(" ")[0].trim();
-            } else if(rang.split(" ")[1].trim() === "pc") {
-                yellowRange = +rang.split(" ")[0].trim();
-            } else if(rang.split(" ")[1].trim() === "laboratoře") {
-                yellowRange = +rang.split(" ")[0].trim();
-            }
-        });
+		rangeRaw.replaceAll("<ul>","")
+			.replaceAll("<li>","")
+			.replaceAll("</ul>","")
+			.replaceAll("</li>","")
+			.replaceAll("hod. ", "")
+			.split("\n")
+			.forEach(a => {
+				a = a.trim().split(" ");
+				if (a[1] == "přednášky") {greenRange = +a[0];}
+				else if (a[1] == "cvičení") {blueRange = +a[0];}
+				else if (a[1] == "pc") {yellowRange = +a[0];}
+				else if (a[1] == "laboratoře") {yellowRange = +a[0];}
+		});
 
         // Find lengths
         var greenLength = 0;
